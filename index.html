@@ -80,6 +80,25 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     }
 
+    #play-music-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      background-color: #ff6680;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 102, 128, 0.5);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    #play-music-btn:hover {
+      background-color: #ff4c68;
+    }
+
     @media (max-width: 480px) {
       h1 {
         font-size: 1.5rem;
@@ -116,17 +135,29 @@
     </a>
   </div>
 
-  <audio id="background-audio" autoplay loop muted controls>
+  <!-- Audio avec muted par défaut pour autoplay (sans son au départ) -->
+  <audio id="background-audio" autoplay loop muted>
     <source src="music.mp3" type="audio/mpeg" />
     Votre navigateur ne supporte pas l’audio HTML5.
   </audio>
 
+  <!-- Bouton pour lancer la musique avec le son -->
+  <button id="play-music-btn" aria-label="Lancer la musique">▶️ Lancer la musique</button>
+
   <script>
-    // Essaye de lancer la musique au chargement (sauf si bloqué)
+    const audio = document.getElementById('background-audio');
+    const btn = document.getElementById('play-music-btn');
+
+    btn.addEventListener('click', () => {
+      audio.muted = false;    // Active le son
+      audio.play();           // Lance la lecture
+      btn.style.display = 'none'; // Cache le bouton après clic
+    });
+
+    // Essayer de lancer la musique muette automatiquement au chargement
     window.addEventListener('load', () => {
-      const audio = document.getElementById('background-audio');
       audio.play().catch(() => {
-        console.log('Lecture audio automatique bloquée par le navigateur');
+        console.log('Lecture automatique bloquée');
       });
     });
   </script>

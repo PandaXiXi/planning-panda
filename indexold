@@ -1,0 +1,165 @@
+!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planning PandaXiXi</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(145deg, #fbc2eb, #fcd5ce, #fff3b0);
+      color: #2d2d2d;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #ff5e78;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      user-select: none;
+    }
+
+    .schedule {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .day {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .day:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      color: #ff6680;
+    }
+
+    .day h2 {
+      margin: 0 0 12px;
+      font-size: 1.4rem;
+      color: #ff6680;
+      user-select: none;
+    }
+
+    .stream-info {
+      font-size: 1.1rem;
+      color: #333;
+      min-height: 1.2em;
+    }
+
+    audio {
+      margin: 40px auto 0;
+      width: 100%;
+      max-width: 700px;
+      outline: none;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    #play-music-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      background-color: #ff6680;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 102, 128, 0.5);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    #play-music-btn:hover {
+      background-color: #ff4c68;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>📅 Planning de la semaine - PandaXiXi</h1>
+  <div class="schedule">
+    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+      <h2>Lundi</h2>
+      <p class="stream-info">21h – 22h30 : Streaming détente</p>
+    </a>
+    <a class="day" href="https://store.steampowered.com/app/1962663/Call_of_Duty_Warzone/?l=french&ref=thejsongames.com" target="_blank" rel="noopener noreferrer">
+      <h2>Mardi</h2>
+      <p class="stream-info">21h – 22h30 : Gaming compétitif</p>
+    </a>
+    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+      <h2>Mercredi</h2>
+      <p class="stream-info">21h – 22h30 : Découverte de jeux</p>
+    </a>
+    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+      <h2>Jeudi</h2>
+      <p class="stream-info">Repos ou événement spécial</p>
+    </a>
+    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+      <h2>Vendredi</h2>
+      <p class="stream-info">Soirée communautaire</p>
+    </a>
+    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+      <h2>Week-end</h2>
+      <p class="stream-info">Pause ou streams surprises</p>
+    </a>
+  </div>
+
+  <!-- Audio avec muted par défaut pour autoplay (sans son au départ) -->
+  <audio id="background-audio" autoplay loop muted>
+    <source src="music.mp3" type="audio/mpeg" />
+    Votre navigateur ne supporte pas l’audio HTML5.
+  </audio>
+
+  <!-- Bouton pour lancer la musique avec le son -->
+  <button id="play-music-btn" aria-label="Lancer la musique">▶️ Lancer la musique</button>
+
+  <script>
+    const audio = document.getElementById('background-audio');
+    const btn = document.getElementById('play-music-btn');
+
+    btn.addEventListener('click', () => {
+      audio.muted = false;    // Active le son
+      audio.play();           // Lance la lecture
+      btn.style.display = 'none'; // Cache le bouton après clic
+    });
+
+    // Essayer de lancer la musique muette automatiquement au chargement
+    window.addEventListener('load', () => {
+      audio.play().catch(() => {
+        console.log('Lecture automatique bloquée');
+      });
+    });
+  </script>
+</body>
+</html>

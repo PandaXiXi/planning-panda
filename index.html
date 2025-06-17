@@ -19,7 +19,6 @@
       flex-direction: column;
       min-height: 100vh;
       align-items: center;
-      transition: background-color 0.5s ease, color 0.5s ease;
     }
 
     h1 {
@@ -40,23 +39,69 @@
     }
 
     .day {
+      position: relative;
       background: rgba(255, 255, 255, 0.85);
       border-radius: 15px;
       padding: 20px;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      cursor: pointer;
-      color: inherit;
+      overflow: hidden;
+      color: #2d2d2d;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
       text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      cursor: pointer;
     }
 
     .day:hover {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      color: #ff6680;
+      transform: translateY(-4px);
+      background-color: #f5f5f5;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .day::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      filter: blur(4px);
+      border-radius: 15px;
+      z-index: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .day > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Images spécifiques par jour */
+    .lundi::before {
+      background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/244710/ss_169362ce2c6d81b682b4a6a9f79e070af4af3c2d.1920x1080.jpg');
+    }
+
+    .mardi::before {
+      background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/1489350/ss_c23f4b04cfd4b0340b29e27005b1e0d20cc8dfd2.1920x1080.jpg');
+    }
+
+    .mercredi::before {
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
+    }
+
+    .jeudi::before {
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
+      opacity: 0.1;
+      filter: blur(3px);
+    }
+
+    .vendredi::before {
+      background-image: url('https://cdn.cloudflare.steamstatic.com/steam/apps/292030/ss_7a7e4a96c0f4c4f85e7e3d03c5f6a60a5eac1f69.1920x1080.jpg');
+    }
+
+    .weekend::before {
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80');
+      opacity: 0.1;
+      filter: blur(3px);
     }
 
     .day h2 {
@@ -72,68 +117,32 @@
       min-height: 1.2em;
     }
 
-    .buttons {
-      margin-top: 40px;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
+    audio {
+      margin: 40px auto 0;
+      width: 100%;
+      max-width: 700px;
+      outline: none;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     }
 
-    .btn-link {
-      padding: 12px 25px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 30px;
+    #play-music-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 30px;
+      font-size: 1.2rem;
       background-color: #ff6680;
       color: white;
-      text-decoration: none;
-      box-shadow: 0 5px 15px rgba(255, 102, 128, 0.5);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn-link:hover {
-      background-color: #ff4c68;
-      transform: scale(1.05);
-    }
-
-    #toggle-theme {
-      cursor: pointer;
-      font-size: 1.2rem;
       border: none;
-      background-color: #ffe5ec;
-      padding: 8px 20px;
-      border-radius: 20px;
-      margin-top: 30px;
-      color: #2d2d2d;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 102, 128, 0.5);
       transition: background-color 0.3s ease;
+      user-select: none;
     }
 
-    #toggle-theme:hover {
-      background-color: #ffd6df;
-    }
-
-    body.dark-mode {
-      background: #1e1e1e;
-      color: #f5f5f5;
-    }
-
-    body.dark-mode .day {
-      background: #2e2e2e;
-      color: #f0f0f0;
-    }
-
-    body.dark-mode .day h2 {
-      color: #ff90a6;
-    }
-
-    body.dark-mode .stream-info {
-      color: #ddd;
-    }
-
-    body.dark-mode #toggle-theme {
-      background-color: #333;
-      color: #fff;
+    #play-music-btn:hover {
+      background-color: #ff4c68;
     }
 
     @media (max-width: 480px) {
@@ -145,70 +154,57 @@
 </head>
 <body>
   <h1>📅 Planning de la semaine - PandaXiXi</h1>
-
   <div class="schedule">
-    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+    <a class="day lundi" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
       <h2>Lundi</h2>
-      <p class="stream-info">21h – 22h30 : Streaming détente</p>
+      <p class="stream-info">21h – 22h30 : Marvel Rivals</p>
     </a>
-    <a class="day" href="https://store.steampowered.com/app/1962663/Call_of_Duty_Warzone/?l=french&ref=thejsongames.com" target="_blank" rel="noopener noreferrer">
+    <a class="day mardi" href="https://store.steampowered.com/app/1962663/Call_of_Duty_Warzone/?l=french&ref=thejsongames.com" target="_blank" rel="noopener noreferrer">
       <h2>Mardi</h2>
       <p class="stream-info">21h – 22h30 : Warzone 🔫</p>
     </a>
-    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+    <a class="day mercredi" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
       <h2>Mercredi</h2>
-      <p class="stream-info">21h – 22h30 : Découverte de jeux</p>
+      <p class="stream-info">21h – 22h30 : Jeu horreur</p>
     </a>
-    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+    <a class="day jeudi" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
       <h2>Jeudi</h2>
-      <p class="stream-info">Repos ou événement spécial</p>
+      <p class="stream-info">Repos</p>
     </a>
-    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+    <a class="day vendredi" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
       <h2>Vendredi</h2>
-      <p class="stream-info">Soirée communautaire</p>
+      <p class="stream-info">Soirée Fortnite</p>
     </a>
-    <a class="day" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
+    <a class="day weekend" href="https://www.twitch.tv/pandaxixi60" target="_blank" rel="noopener noreferrer">
       <h2>Week-end</h2>
-      <p class="stream-info">Pause ou streams surprises</p>
+      <p class="stream-info">Repos / Off</p>
     </a>
   </div>
 
-  <div class="buttons">
-    <a class="btn-link" href="https://www.twitch.tv/pandaxixi60" target="_blank">🔴 Ma chaîne Twitch</a>
-    <a class="btn-link" href="https://discord.gg/SEpbzSm2" target="_blank">💬 Mon Discord</a>
-  </div>
-
-  <button id="toggle-theme">🌙 Activer le mode sombre</button>
-
+  <!-- Audio avec muted par défaut pour autoplay (sans son au départ) -->
   <audio id="background-audio" autoplay loop muted>
     <source src="music.mp3" type="audio/mpeg" />
     Votre navigateur ne supporte pas l’audio HTML5.
   </audio>
 
+  <!-- Bouton pour lancer la musique avec le son -->
   <button id="play-music-btn" aria-label="Lancer la musique">▶️ Lancer la musique</button>
 
   <script>
     const audio = document.getElementById('background-audio');
     const btn = document.getElementById('play-music-btn');
-    const toggleTheme = document.getElementById('toggle-theme');
 
     btn.addEventListener('click', () => {
-      audio.muted = false;
-      audio.play();
-      btn.style.display = 'none';
+      audio.muted = false;    // Active le son
+      audio.play();           // Lance la lecture
+      btn.style.display = 'none'; // Cache le bouton après clic
     });
 
+    // Essayer de lancer la musique muette automatiquement au chargement
     window.addEventListener('load', () => {
-      audio.play().catch(() => console.log('Lecture automatique bloquée'));
-    });
-
-    toggleTheme.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      if (document.body.classList.contains('dark-mode')) {
-        toggleTheme.textContent = "☀️ Activer le mode clair";
-      } else {
-        toggleTheme.textContent = "🌙 Activer le mode sombre";
-      }
+      audio.play().catch(() => {
+        console.log('Lecture automatique bloquée');
+      });
     });
   </script>
 </body>
